@@ -1,43 +1,44 @@
-// src/features/auth/pages/Login.tsx
+// src/features/auth/pages/ResetPassword.tsx
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
-import OAuthButtons from "../components/OAuthButtons";
+import { toast } from 'react-toastify';
+import PasswordRequirements from "../components/PasswordRequirements";
 
-export default function Login() {
+export default function ResetPassword() {
     const navigate = useNavigate();
 
     const handleContinue = () => {
-        navigate('/dashboard');
+        toast.success("The password has been reset!");
+        navigate('/login');
     }
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <Form
                 title='Achievka'
+                subtitle='Enter new password to reset.'
                 footer={
                     <>
-                        <div className="d-flex">Don't have an account? <Link to="/register" className="text-blue-600">Sign up</Link></div>
-                        <hr />
-                        <OAuthButtons />
+                        <Link to="/login" className="text-blue-600">Back to Login</Link>
                     </>
                 }
             >
-                <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full px-4 py-2 border rounded-md"
-                    required
-                />
                 <input
                     type="password"
                     placeholder="Password"
                     className="w-full px-4 py-2 border rounded-md"
                     required
                 />
-                <div className="d-flex"><Link to="/forgot-password" className="text-blue-600">Forgot password?</Link></div>
-                <button type="submit" className="btn btn-primary" onClick={handleContinue}>Log in</button>
+                <input
+                    type="password"
+                    placeholder="Repeat password"
+                    className="w-full px-4 py-2 border rounded-md"
+                    required
+                />
+                <PasswordRequirements />
+                <button type="submit" className="btn btn-primary" onClick={handleContinue}>Reset</button>
             </Form>
         </div>
     )
