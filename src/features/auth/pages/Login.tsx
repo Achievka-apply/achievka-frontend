@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
+import Input from "../../../components/Input";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -24,10 +25,9 @@ export default function Login() {
                     </>
                 }
             >
-                <input
+                <Input
                     type="email"
                     placeholder="Email"
-                    className="w-full px-4 py-2 border rounded-md"
                     required
                 />
                 <input

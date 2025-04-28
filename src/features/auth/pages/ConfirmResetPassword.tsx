@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import Input from "../../../components/Input";
 
 export default function ConfirmResetPassword() {
     const navigate = useNavigate();
@@ -24,10 +25,9 @@ export default function ConfirmResetPassword() {
                     </>
                 }
             >
-                <input
+                <Input
                     type="code"
                     placeholder="Confirmation code"
-                    className="w-full px-4 py-2 border rounded-md"
                     required
                 />
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Confirm</button>

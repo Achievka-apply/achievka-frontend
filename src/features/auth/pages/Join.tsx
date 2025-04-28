@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
+import Input from "../../../components/Input";
 
 export default function Join() {
     const navigate = useNavigate();
@@ -24,10 +25,9 @@ export default function Join() {
                     </>
                 }
             >
-                <input
+                <Input
                     type="email"
                     placeholder="Email"
-                    className="w-full px-4 py-2 border rounded-md"
                     required
                 />
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Continue</button>
