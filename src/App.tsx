@@ -9,17 +9,11 @@ import Register from "./features/auth/pages/Register";
 import Login from "./features/auth/pages/Login";
 import ForgotPassword from "./features/auth/pages/ForgotPassword";
 import Survey from "./features/dashboard/pages/Survey";
-import MainLayout from "./layout/MainLayout";
-import Dashboard from "./features/dashboard/pages/Dashboard";
-import GeneralDashboard from "./features/dashboard/pages/GeneralDashboard"
-import Favorites from "./features/dashboard/pages/Favorites";
-import Activity from "./features/dashboard/pages/Activity" ;
-import Documents from './features/dashboard/pages/Documents';
-import GeneralDocuments from './features/dashboard/pages/GeneralDocuments';
-import Resumes from './features/user/pages/Resumes';
-import CoverLetters from './features/user/pages/CoverLetters';
 import ConfirmResetPassword from './features/auth/pages/ConfirmResetPassword';
 import ResetPassword from './features/auth/pages/ResetPassword';
+import Dashboard from './features/dashboard/pages/Dashboard';
+import MainLayout from './components/main_layout/MainLayout';
+import University from './features/universities/pages/University';
 
 function App() {
   return (
@@ -38,17 +32,10 @@ function App() {
           {/* Приватные роуты */}
           <Route path="/survey" element={<Survey />} />
           
-          <Route element={<MainLayout />}>
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<GeneralDashboard />} />
-              <Route path="favorites" element={<Favorites />} />
-              <Route path="activity" element={<Activity />} />
-            </Route>
+          <Route path="/app" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="university" element={<University />}>
 
-            <Route path="/documents" element={<Documents />}>
-              <Route index element={<GeneralDocuments />} />
-              <Route path="favorites" element={<Resumes />} />
-              <Route path="activity" element={<CoverLetters />} />
             </Route>
           </Route>
 

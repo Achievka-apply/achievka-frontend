@@ -10,7 +10,7 @@ export default function Login() {
     const navigate = useNavigate();
 
     const handleContinue = () => {
-        navigate('/dashboard');
+        navigate('/app');
     }
 
     return (
