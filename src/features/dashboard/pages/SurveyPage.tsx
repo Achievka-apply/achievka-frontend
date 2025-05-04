@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SurveyAnswers } from "../dashboard.types";
 import { useNavigate } from "react-router-dom";
 
-export default function Survey() {
+export default function SurveyPage() {
 
     const navigate = useNavigate();
 

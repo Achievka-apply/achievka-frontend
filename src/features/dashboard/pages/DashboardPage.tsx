@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LowerTabs from '../components/LowerTabs';
 import UpperTabs from '../components/UpperTabs';
 
-export default function Dashboard() {
+export default function DashboardPage() {
 
     const [activeUpperTab, setActiveUpperTab] = useState<"general" | "activity" | "favorites">("general");
     const [activeLowerTab, setActiveLowerTab] = useState<"documents" | "progress">("documents");
