@@ -1,12 +1,13 @@
-// src/features/auth/pages/ResetPassword.tsx
+// src/features/auth/pages/ResetPasswordPage.tsx
 
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import PasswordRequirements from "../components/PasswordRequirements";
+import Input from "../../../components/Input";
 
-export default function ResetPassword() {
+export default function ResetPasswordPage() {
     const navigate = useNavigate();
 
     const handleContinue = () => {
@@ -17,7 +18,7 @@ export default function ResetPassword() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <Form
-                title='Achievka'
+                title='Create new password'
                 subtitle='Enter new password to reset.'
                 footer={
                     <>
@@ -25,16 +26,14 @@ export default function ResetPassword() {
                     </>
                 }
             >
-                <input
+                <Input
                     type="password"
                     placeholder="Password"
-                    className="w-full px-4 py-2 border rounded-md"
                     required
                 />
-                <input
+                <Input
                     type="password"
                     placeholder="Repeat password"
-                    className="w-full px-4 py-2 border rounded-md"
                     required
                 />
                 <PasswordRequirements />

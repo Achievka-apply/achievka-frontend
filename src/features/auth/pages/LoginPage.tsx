@@ -1,4 +1,4 @@
-// src/features/auth/pages/Join.tsx
+// src/features/auth/pages/LoginPage.tsx
 
 import { useNavigate } from "react-router-dom"
 import Form from "../components/Form";
@@ -6,20 +6,20 @@ import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
 import Input from "../../../components/Input";
 
-export default function Join() {
+export default function LoginPage() {
     const navigate = useNavigate();
 
     const handleContinue = () => {
-        navigate('/register');
+        navigate('/app');
     }
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <Form
-                title='Achievka'
+                title='Log in'
                 footer={
                     <>
-                        By continuing, you agree to the <Link to="#privacy-policy" className="text-blue-600">Privacy Policy</Link>
+                        <div className="d-flex">Don't have an account? <Link to="/register" className="text-blue-600">Sign up</Link></div>
                         <hr />
                         <OAuthButtons />
                     </>
@@ -30,7 +30,13 @@ export default function Join() {
                     placeholder="Email"
                     required
                 />
-                <button type="submit" className="btn btn-primary" onClick={handleContinue}>Continue</button>
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    required
+                />
+                <div className="d-flex"><Link to="/forgot-password" className="text-blue-600">Forgot password?</Link></div>
+                <button type="submit" className="btn btn-primary" onClick={handleContinue}>Log in</button>
             </Form>
         </div>
     )

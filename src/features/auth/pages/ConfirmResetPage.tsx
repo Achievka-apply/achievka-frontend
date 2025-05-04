@@ -1,4 +1,4 @@
-// src/features/auth/pages/ConfirmResetPassword.tsx
+// src/features/auth/pages/ConfirmResetPage.tsx
 
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Input from "../../../components/Input";
 
-export default function ConfirmResetPassword() {
+export default function ConfirmResetPage() {
     const navigate = useNavigate();
 
     const handleContinue = () => {
@@ -17,7 +17,7 @@ export default function ConfirmResetPassword() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <Form
-                title='Achievka'
+                title='Confirm'
                 subtitle='Enter your code from email to reset your password.'
                 footer={
                     <>

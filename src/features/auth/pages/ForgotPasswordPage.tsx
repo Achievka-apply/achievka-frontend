@@ -1,4 +1,4 @@
-// src/features/auth/pages/ForgotPassword.tsx
+// src/features/auth/pages/ForgotPasswordPage.tsx
 
 import { useNavigate } from "react-router-dom"
 import Form from "../components/Form";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Input from "../../../components/Input";
 
-export default function ForgotPassword() {
+export default function ForgotPasswordPage() {
 
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <Form
-                title='Achievka'
+                title='Forgot password'
                 subtitle='Enter your email address and we will send you instructions to reset your password.'
                 footer={
                     <>
