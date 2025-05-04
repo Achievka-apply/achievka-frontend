@@ -4,14 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from "./pages/technical_pages/NotFound";
 import Welcome from "./pages/Welcome";
-import Join from "./features/auth/pages/Join"
-import Register from "./features/auth/pages/Register";
-import Login from "./features/auth/pages/Login";
-import ForgotPassword from "./features/auth/pages/ForgotPassword";
-import Survey from "./features/dashboard/pages/Survey";
-import ConfirmResetPassword from './features/auth/pages/ConfirmResetPassword';
-import ResetPassword from './features/auth/pages/ResetPassword';
-import Dashboard from './features/dashboard/pages/Dashboard';
+import JoinPage from "./features/auth/pages/JoinPage"
+import RegisterPage from "./features/auth/pages/RegisterPage";
+import LoginPage from "./features/auth/pages/LoginPage";
+import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
+import SurveyPage from "./features/dashboard/pages/SurveyPage";
+import ConfirmResetPage from './features/auth/pages/ConfirmResetPage';
+import ResetPasswordPage from './features/auth/pages/ResetPasswordPage';
+import DashboardPage from './features/dashboard/pages/DashboardPage';
 import MainLayout from './components/main_layout/MainLayout';
 import University from './features/universities/pages/University';
 
@@ -22,18 +22,18 @@ function App() {
         <Routes>
           {/* Публичные роуты */}
           <Route path="/" element={<Welcome />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/confirm-reset-password" element={<ConfirmResetPassword />}/>
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/join" element={<JoinPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/confirm-reset-password" element={<ConfirmResetPage />}/>
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Приватные роуты */}
-          <Route path="/survey" element={<Survey />} />
+          <Route path="/survey" element={<SurveyPage />} />
           
           <Route path="/app" element={<MainLayout />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<DashboardPage />} />
             <Route path="university" element={<University />}>
 
             </Route>
