@@ -27,7 +27,7 @@ jobs:
           REPO=${{ secrets.DOCKERHUB_USER }}/achievka_frontend
           TAG=${{ github.sha }}
           docker build \
-            -f frontend/Dockerfile \
+            -f /Dockerfile \
             -t $REPO:$TAG \
             -t $REPO:latest \
             frontend
