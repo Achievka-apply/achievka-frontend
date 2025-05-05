@@ -10,10 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Checkout code
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # 2) Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -21,34 +20,28 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3) Build & push Docker image из папки frontend
       - name: Build and push image
         run: |
           REPO=${{ secrets.DOCKERHUB_USER }}/achievka_frontend
           TAG=${{ github.sha }}
-          docker build \
-            -f Dockerfile \
+          docker build -f Dockerfile \
             -t $REPO:$TAG \
             -t $REPO:latest \
             .
           docker push $REPO:$TAG
           docker push $REPO:latest
 
-
-      # 4) Prepare SSH key for deployment
       - name: Setup SSH key
         run: |
-          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-
-      # 5) Deploy on EC2 via SSH
       - name: Deploy to EC2
         run: |
-          ssh -i ~/.ssh/github_actions ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
-
             docker-compose pull frontend
             docker-compose stop frontend   || true
             docker-compose rm -f frontend  || true
