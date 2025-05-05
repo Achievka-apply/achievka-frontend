@@ -7,9 +7,16 @@ import OAuthButtons from "../components/OAuthButtons";
 import PasswordRequirements from "../components/PasswordRequirements";
 import Input from "../../../components/Input";
 import { isValidEmail } from "../../../utils/validators/emailValidator";
+import { useState } from "react";
+import { isValidPassword } from "../../../utils/validators/passwordValidator";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const passwordOK = isValidPassword(password);
 
     const handleContinue = () => {
         navigate('/survey');
@@ -31,6 +38,8 @@ export default function RegisterPage() {
                     type="email"
                     placeholder="Email"
                     required
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     validator={isValidEmail}
                     errorMessage="Please enter a valid email address"
                 />
@@ -38,13 +47,21 @@ export default function RegisterPage() {
                     type="password"
                     placeholder="Password"
                     required
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    validator={isValidPassword}
                 />
                 <Input
                     type="password"
                     placeholder="Repeat password"
                     required
                 />
-                <PasswordRequirements />
+                {/* Show detailed requirements when invalid */}
+                {!passwordOK && password.length > 0 && (
+                    <div className="">
+                        <PasswordRequirements />
+                    </div>
+                )}
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Sign up</button>
             </Form>
         </div>

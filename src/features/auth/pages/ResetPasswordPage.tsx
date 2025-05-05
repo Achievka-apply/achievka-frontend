@@ -6,9 +6,15 @@ import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import PasswordRequirements from "../components/PasswordRequirements";
 import Input from "../../../components/Input";
+import { useState } from "react";
+import { isValidPassword } from "../../../utils/validators/passwordValidator";
 
 export default function ResetPasswordPage() {
     const navigate = useNavigate();
+
+    const [password, setPassword] = useState('');
+
+    const passwordOK = isValidPassword(password);
 
     const handleContinue = () => {
         toast.success("The password has been reset!");
@@ -30,13 +36,21 @@ export default function ResetPasswordPage() {
                     type="password"
                     placeholder="Password"
                     required
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    validator={isValidPassword}
                 />
                 <Input
                     type="password"
                     placeholder="Repeat password"
                     required
                 />
-                <PasswordRequirements />
+                {/* Show detailed requirements when invalid */}
+                {!passwordOK && password.length > 0 && (
+                    <div className="">
+                        <PasswordRequirements />
+                    </div>
+                )}
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Reset</button>
             </Form>
         </div>
