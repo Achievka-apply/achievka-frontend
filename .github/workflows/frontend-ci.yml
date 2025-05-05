@@ -38,7 +38,6 @@ jobs:
       # 4) Prepare SSH key for deployment
       - name: Setup SSH key
         run: |
-          mkdir -p ~/.ssh
           printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
           chmod 600 ~/.ssh/github_actions
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
