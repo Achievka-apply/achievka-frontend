@@ -24,7 +24,7 @@ export default function Input({
     }
 
     return (
-        <div className="mb-4">
+        <>
             <input
                 {...rest}
                 type={type}
@@ -32,15 +32,15 @@ export default function Input({
                 required={required}
                 onBlur={handleBlur}
                 className={
-                    `w-full px-4 py-2 border rounded-md ` +
-                    (error ? 'border-red-500' : 'border-gray-300') +
+                    `w-full px-4 py-2 rounded-md border` +
+                    (error ? ' border-danger' : ' border-light-subtle') +
                     ` ${className}`
                 }
             />
             {error && (
-                <p className="mt-1 text-sm text-red-600">{error}</p>
+                <p className="text-danger">{error}</p>
             )}
-        </div>
+        </>
     );
   }
   
