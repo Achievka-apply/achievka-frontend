@@ -18,7 +18,7 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Копируем собранный бандл
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/dist ./dist
 
 # Открываем порт
 EXPOSE 3000
