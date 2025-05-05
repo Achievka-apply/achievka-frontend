@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Клонируем репозиторий
+      # 1) Checkout repository
       - uses: actions/checkout@v3
 
-      # 2) Логинимся в Docker Hub
+      # 2) Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -21,20 +21,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3) Сборка Docker-образа и пуш в Docker Hub
+      # 3) Build React app and Docker image
       - name: Build and push image
         run: |
           REPO=${{ secrets.DOCKERHUB_USER }}/achievka_frontend
           TAG=${{ github.sha }}
+          # Собираем Docker-образ, указывая Dockerfile в корне
           docker build \
-            -f /Dockerfile \
+            -f Dockerfile \
             -t $REPO:$TAG \
             -t $REPO:latest \
             frontend
           docker push $REPO:$TAG
           docker push $REPO:latest
 
-      # 4) Подготовка SSH-ключа
+      # 4) Prepare SSH for deploy
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -42,16 +43,14 @@ jobs:
           chmod 600 ~/.ssh/github_actions
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      # 5) Деплой на EC2
+      # 5) Deploy on EC2
       - name: Deploy to EC2
         run: |
           ssh -i ~/.ssh/github_actions ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
-
-            # Обновляем образ сервиса frontend
+            # Pull updated frontend image
             docker-compose pull frontend
-
-            # Перезапускаем контейнер
+            # Restart container
             docker-compose stop frontend   || true
             docker-compose rm -f frontend  || true
             docker-compose up -d frontend
