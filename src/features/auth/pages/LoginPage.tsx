@@ -5,6 +5,7 @@ import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
 import Input from "../../../components/Input";
+import { isValidEmail } from "../../../utils/validators/emailValidator";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -29,6 +30,8 @@ export default function LoginPage() {
                     type="email"
                     placeholder="Email"
                     required
+                    validator={isValidEmail}
+                    errorMessage="Please enter a valid email address"
                 />
                 <Input
                     type="password"

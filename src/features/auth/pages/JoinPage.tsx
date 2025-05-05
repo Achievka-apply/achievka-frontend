@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
 import Input from "../../../components/Input";
 import WelcomeBlock from "../components/WelcomeBlock";
+import { isValidEmail } from "../../../utils/validators/emailValidator";
 
 export default function JoinPage() {
     const navigate = useNavigate();
@@ -37,6 +38,8 @@ export default function JoinPage() {
                             type="email"
                             placeholder="Email"
                             required
+                            validator={isValidEmail}
+                            errorMessage="Please enter a valid email address"
                         />
                         <button type="submit" className="btn btn-primary" onClick={handleContinue}>Continue</button>
                     </Form>

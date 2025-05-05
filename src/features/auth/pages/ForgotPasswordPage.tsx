@@ -5,6 +5,7 @@ import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Input from "../../../components/Input";
+import { isValidEmail } from "../../../utils/validators/emailValidator";
 
 export default function ForgotPasswordPage() {
 
@@ -30,6 +31,8 @@ export default function ForgotPasswordPage() {
                     type="email"
                     placeholder="Email"
                     required
+                    validator={isValidEmail}
+                    errorMessage="Please enter a valid email address"
                 />
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Send</button>
             </Form>
