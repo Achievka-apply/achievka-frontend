@@ -21,14 +21,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3) Build Docker image from project root
+      # 3) Build & push Docker image из папки frontend
       - name: Build and push image
+        working-directory: frontend       # переходим в папку с Dockerfile
         run: |
           REPO=${{ secrets.DOCKERHUB_USER }}/achievka_frontend
           TAG=${{ github.sha }}
-          # Dockerfile расположен в корне, сборка из текущей директории
           docker build \
-            -f Dockerfile \
             -t $REPO:$TAG \
             -t $REPO:latest \
             .
@@ -49,10 +48,7 @@ jobs:
           ssh -i ~/.ssh/github_actions ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
 
-            # Pull updated frontend image
             docker-compose pull frontend
-
-            # Restart frontend container
             docker-compose stop frontend   || true
             docker-compose rm -f frontend  || true
             docker-compose up -d frontend
