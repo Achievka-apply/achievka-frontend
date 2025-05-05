@@ -23,16 +23,17 @@ jobs:
 
       # 3) Build & push Docker image из папки frontend
       - name: Build and push image
-        working-directory: frontend       # переходим в папку с Dockerfile
         run: |
           REPO=${{ secrets.DOCKERHUB_USER }}/achievka_frontend
           TAG=${{ github.sha }}
           docker build \
+            -f Dockerfile \
             -t $REPO:$TAG \
             -t $REPO:latest \
             .
           docker push $REPO:$TAG
           docker push $REPO:latest
+
 
       # 4) Prepare SSH key for deployment
       - name: Setup SSH key
