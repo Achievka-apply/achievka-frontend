@@ -31,12 +31,18 @@ jobs:
           docker push $REPO:$TAG
           docker push $REPO:latest
 
-      - name: Setup SSH key
+      - name: Добавить GitHub в known_hosts
         run: |
           mkdir -p ~/.ssh
-          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          # записываем приватный ключ из секрета
+          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          # пробросим ssh-агент (если планируется использовать нестандартное имя файла)
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+          # правильный вызов ssh-keyscan с указанием хоста
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
 
 
       - name: Deploy to EC2
