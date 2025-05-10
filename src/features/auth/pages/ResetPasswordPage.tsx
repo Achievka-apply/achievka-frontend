@@ -8,13 +8,16 @@ import PasswordRequirements from "../components/PasswordRequirements";
 import Input from "../../../components/Input";
 import { useState } from "react";
 import { isValidPassword } from "../../../utils/validators/passwordValidator";
+import PasswordRepeat from "../components/PasswordRepeat";
 
 export default function ResetPasswordPage() {
     const navigate = useNavigate();
 
     const [password, setPassword] = useState('');
+    const [repeatedPassword, setRepeatedPassword] = useState('');
 
     const passwordOK = isValidPassword(password);
+    const passwordRepeat = (password === repeatedPassword);
 
     const handleContinue = () => {
         toast.success("The password has been reset!");
@@ -35,16 +38,21 @@ export default function ResetPasswordPage() {
                 <Input
                     type="password"
                     placeholder="Password"
-                    required
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    validator={isValidPassword}
+                    hasError={!passwordOK && password.length > 0}
                 />
                 <Input
                     type="password"
                     placeholder="Repeat password"
-                    required
+                    value={repeatedPassword}
+                    onChange={e => setRepeatedPassword(e.target.value)}
+                    hasError={!passwordRepeat && repeatedPassword.length > 0}
                 />
+                {/* Show that passwords are not equal */}
+                {!passwordRepeat && repeatedPassword.length > 0 && (
+                    <PasswordRepeat />
+                )}
                 {/* Show detailed requirements when invalid */}
                 {!passwordOK && password.length > 0 && (
                     <div className="">

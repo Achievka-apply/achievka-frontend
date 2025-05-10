@@ -1,8 +1,8 @@
 // src/features/auth/pages/JoinPage.tsx
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
+import { useState } from "react";
 import Form from "../components/Form";
-import { Link } from "react-router-dom";
 import OAuthButtons from "../components/OAuthButtons";
 import Input from "../../../components/Input";
 import WelcomeBlock from "../components/WelcomeBlock";
@@ -10,9 +10,33 @@ import { isValidEmail } from "../../../utils/validators/emailValidator";
 
 export default function JoinPage() {
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const handleContinue = () => {
-        navigate('/register');
+    async function handleContinue(e: React.FormEvent) {
+        e.preventDefault();
+        setError(null);
+
+        if (!isValidEmail(email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        if(!email) {
+            navigate("/register");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            navigate(`/register?email=${encodeURIComponent(email)}`);
+        } catch {
+            setError("Something went wrong, please try again");
+        } finally {
+            setLoading(false);
+        }
+
     }
 
     return (
@@ -37,11 +61,16 @@ export default function JoinPage() {
                         <Input
                             type="email"
                             placeholder="Email"
-                            required
-                            validator={isValidEmail}
-                            errorMessage="Please enter a valid email address"
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value); setError(null); }}
+                            hasError={!!error}
                         />
-                        <button type="submit" className="btn btn-primary" onClick={handleContinue}>Continue</button>
+                        {error && (
+                            <p className="text-danger">{error}</p>
+                        )}
+                        <button type="submit" className="btn btn-primary" disabled={loading} onClick={handleContinue}>
+                            {loading ? "Checking…" : "Continue"}
+                        </button>
                     </Form>
                 </div>
             </div>
