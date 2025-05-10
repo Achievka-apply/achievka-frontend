@@ -43,6 +43,8 @@ export const apiRequest = async ({
 
         const response = await fetch(request)
 
+        console.log("Sending request...")
+
         const data = await response.json().catch(() => ({}));
         
         if (!response.ok) {
