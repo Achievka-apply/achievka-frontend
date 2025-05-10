@@ -16,10 +16,9 @@ export default function OAuthButtons() {
       return;
     }
 
-    const { access, refresh } = data;
+    const { access } = data;
 
     localStorage.setItem("access_token", access);
-    localStorage.setItem("refresh_token", refresh);
 
     navigate('/app');
   };
