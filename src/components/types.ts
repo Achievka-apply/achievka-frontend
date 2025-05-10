@@ -7,6 +7,5 @@ export interface InputProps
     type: string,
     placeholder: string,
     required?: boolean,
-    validator?: (value: string) => boolean;
-    errorMessage?: string;
+    hasError?: boolean,
 }

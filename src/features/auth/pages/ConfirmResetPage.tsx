@@ -5,9 +5,12 @@ import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Input from "../../../components/Input";
+import { useState } from "react";
 
 export default function ConfirmResetPage() {
     const navigate = useNavigate();
+
+    const [code, setCode] = useState<string>('');
 
     const handleContinue = () => {
         toast.success("The code has been confirmed!");
@@ -28,7 +31,8 @@ export default function ConfirmResetPage() {
                 <Input
                     type="code"
                     placeholder="Confirmation code"
-                    required
+                    value={code}
+                    onChange={e => {setCode(e.target.value)}}
                 />
                 <button type="submit" className="btn btn-primary" onClick={handleContinue}>Confirm</button>
             </Form>
