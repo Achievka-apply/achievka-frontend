@@ -28,15 +28,8 @@ export default function JoinPage() {
             return;
         }
 
-        setLoading(true);
-        try {
-            navigate(`/register?email=${encodeURIComponent(email)}`);
-        } catch {
-            setError("Something went wrong, please try again");
-        } finally {
-            setLoading(false);
-        }
-
+        setLoading(false);
+        navigate(`/register?email=${encodeURIComponent(email)}`);
     }
 
     return (

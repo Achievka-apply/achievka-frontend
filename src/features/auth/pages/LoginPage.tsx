@@ -35,22 +35,16 @@ export default function LoginPage() {
 
         setLoading(true);
         try {
-            /* const registered = await checkEmailRegistered(email);
-            if (!registered) {
-                setEmailError(
-                    <>
-                        This email is not registered.
-                        Please {<Link to="/register" className="text-blue-600">Sign up</Link>} or try another email
-                    </>
-                );
-                return;
-            } */
-            
             const data = await loginRequest({email, password});
-            const { access, refresh } = data;
+
+            if (!data) {
+                console.error("API не вернул тело ответа");
+                return;
+            }
+
+            const { access } = data;
 
             localStorage.setItem("access_token", access);
-            localStorage.setItem("refresh_token", refresh);
 
             navigate("/app")
         } catch {
