@@ -28,7 +28,6 @@ export const apiRequest = async ({
 
         const headers: HeadersInit = {
             'Content-Type': 'application/json',
-            'credentials': 'include',
         }
 
         if(token) {
@@ -39,6 +38,7 @@ export const apiRequest = async ({
             method,
             headers,
             body: body ? JSON.stringify(body) : undefined,
+            credentials: "include",
         })
 
         const response = await fetch(request)

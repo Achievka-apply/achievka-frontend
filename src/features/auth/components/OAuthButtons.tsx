@@ -11,6 +11,11 @@ export default function OAuthButtons() {
  
     const data = await oAuthRequest(credentialResponse);
     
+    if (!data) {
+      console.error("API не вернул тело ответа");
+      return;
+    }
+
     const { access, refresh } = data;
 
     localStorage.setItem("access_token", access);
