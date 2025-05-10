@@ -19,7 +19,7 @@ export const apiRequest = async ({
     token?: string | null;
 }) => {
     try {
-        const url = new URL(`${BASE_API_URL}/${route}`);
+        const url = new URL(`${BASE_API_URL}/${route}/`);
         if (params) {
             Object.entries(params).forEach(([key, value]) => 
                 url.searchParams.append(key, value)
@@ -64,7 +64,7 @@ export const loginRequest = (creds: LoginCredentials): Promise<AuthResponse> =>
         body: creds,
     });
 
-export const registerRequest = (creds: RegisterCredentials): Promise<AuthResponse> =>
+export const registerRequest = (creds: RegisterCredentials): Promise<void> =>
     apiRequest({
         route: "api/auth/register",
         method: "POST",

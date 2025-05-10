@@ -46,19 +46,8 @@ export default function RegisterPage() {
 
         setLoading(true);
         try {
-
-            const data = await registerRequest({email, password, password2});
-            
-            if (!data) {
-                console.error("API не вернул тело ответа");
-                return;
-            }
-
-            const { access } = data;
-
-            localStorage.setItem("access_token", access);
-
-            navigate("/app")
+            await registerRequest({email, password, password2});
+            navigate("/login")
         } catch {
             setEmailError("Something went wrong, please try again");
         } finally {
