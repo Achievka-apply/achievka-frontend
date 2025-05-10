@@ -64,7 +64,7 @@ export const loginRequest = (creds: LoginCredentials): Promise<AuthResponse> =>
         body: creds,
     });
 
-export const registerRequest = (creds: RegisterCredentials): Promise<AuthResponse> =>
+export const registerRequest = (creds: RegisterCredentials): Promise<void> =>
     apiRequest({
         route: "api/auth/register",
         method: "POST",
