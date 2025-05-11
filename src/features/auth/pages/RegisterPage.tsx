@@ -49,7 +49,7 @@ export default function RegisterPage() {
             await registerRequest({email, password, password2});
             navigate("/login")
         } catch {
-            setEmailError("Something went wrong, please try again");
+            setEmailError("Failed to register, please try again");
         } finally {
             setLoading(false);
         }

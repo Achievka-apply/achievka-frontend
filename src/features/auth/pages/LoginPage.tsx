@@ -48,7 +48,7 @@ export default function LoginPage() {
 
             navigate("/app")
         } catch {
-            setEmailError("Something went wrong, please try again");
+            setEmailError("Failed to log in, please try again");
         } finally {
             setLoading(false);
         }
