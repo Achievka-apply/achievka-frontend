@@ -37,9 +37,20 @@ export default function ResetPasswordPage() {
 
     }, [searchParams]);
 
-    const handleReset = async () => {
+    async function handleReset(e: React.FormEvent) {
+        e.preventDefault();
         try {
-            await passwordResetConfirmRequest({uid, token, new_password1: password, new_password2: repeatedPassword});
+            const data = await passwordResetConfirmRequest({uid, token, new_password1: password, new_password2: repeatedPassword});
+            if (data.status === 401) {
+                console.error(data.detail)
+                navigate("/login");
+            } else if (data.status === 400) {
+                console.error(data.uid, data.token);
+                throw new Error("Bad request. Failed with status "+data.status);
+            } else if (data.status === 404) {
+                console.error(data.uid, data.token);
+                throw new Error("Not found. Failed with status "+data.status);
+            }
             toast.success("The password has been reset!");
             navigate('/login');
         } catch {

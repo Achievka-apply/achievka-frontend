@@ -1,7 +1,7 @@
 // src/features/auth/auth.api.ts
 
 import { CredentialResponse } from "@react-oauth/google";
-import { AuthResponse, LoginCredentials, LogoutResponse, PasswordResetBody, PasswordResetConfirmBody, RegisterCredentials } from "./auth.types"
+import { AuthResponse, LoginCredentials, PasswordResetBody, PasswordResetConfirmBody, RegisterCredentials } from "./auth.types"
 import { apiRequest } from "../../api/api";
 
 export const loginRequest = (body: LoginCredentials): Promise<AuthResponse> =>
@@ -11,14 +11,14 @@ export const loginRequest = (body: LoginCredentials): Promise<AuthResponse> =>
         body,
     });
 
-export const registerRequest = (body: RegisterCredentials): Promise<void | {email: string}> =>
+export const registerRequest = (body: RegisterCredentials) =>
     apiRequest({
         route: "auth/register",
         method: "POST",
         body,
     });
 
-export const logoutRequest = (): Promise<LogoutResponse> =>
+export const logoutRequest = () =>
     apiRequest({
         route: "auth/logout",
         method: "POST",

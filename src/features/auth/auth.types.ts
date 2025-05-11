@@ -24,10 +24,6 @@ export interface AuthResponse {
   access: string;
 }
 
-export interface LogoutResponse {
-  refresh?: string,
-}
-
 export interface PasswordResetBody {
   email: string
 }

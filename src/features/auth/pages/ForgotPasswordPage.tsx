@@ -1,7 +1,7 @@
 // src/features/auth/pages/ForgotPasswordPage.tsx
 
 import Form from "../components/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Input from "../../../components/Input";
 import { isValidEmail } from "../../../utils/validators/emailValidator";
@@ -9,6 +9,7 @@ import { useState } from "react";
 import { passwordResetRequest } from "../auth.api";
 
 export default function ForgotPasswordPage() {
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState<React.ReactNode | null>(null);
@@ -25,7 +26,17 @@ export default function ForgotPasswordPage() {
     
         setLoading(true);
         try {
-            await passwordResetRequest({email});
+            const data = await passwordResetRequest({email});
+            if (data.status === 401) {
+                console.error(data.detail)
+                navigate("/login");
+            } else if (data.status === 400) {
+                console.error(data.email);
+                throw new Error("Bad request. Failed with status "+data.status);
+            } else if (data.status === 404) {
+                console.error(data.email);
+                throw new Error("Not found. Failed with status "+data.status);
+            }
             toast.success("Check your inbox for the reset link");
         } catch {
             toast.error("Failed to send reset link, please try again");

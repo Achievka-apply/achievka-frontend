@@ -36,7 +36,7 @@ export default function LoginPage() {
         setLoading(true);
         try {
             const data = await loginRequest({email, password});
-
+            
             if (!data) {
                 console.error("API не вернул тело ответа");
                 return;
