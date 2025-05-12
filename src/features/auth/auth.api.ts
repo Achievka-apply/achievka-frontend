@@ -48,4 +48,5 @@ export const passwordResetConfirmRequest = (body: PasswordResetConfirmBody) =>
         route: "auth/password_reset_confirm",
         method: "POST",
         body,
+
     })
