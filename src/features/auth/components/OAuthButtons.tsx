@@ -1,7 +1,7 @@
 // src/features/auth/components/OAuthButtons.tsx
 
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { oAuthRequest } from "../auth.api";
+import { googleOAuthRequest } from "../auth.api";
 import { useNavigate } from "react-router-dom";
 
 export default function OAuthButtons() {
@@ -9,7 +9,7 @@ export default function OAuthButtons() {
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
  
-    const data = await oAuthRequest(credentialResponse);
+    const data = await googleOAuthRequest(credentialResponse);
     
     if (!data) {
       console.error("API не вернул тело ответа");
