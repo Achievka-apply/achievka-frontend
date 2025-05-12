@@ -14,17 +14,17 @@ export default function JoinPage() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    async function handleContinue(e: React.FormEvent) {
+    function handleContinue(e: React.FormEvent) {
         e.preventDefault();
         setError(null);
 
-        if (!isValidEmail(email)) {
-            setError("Please enter a valid email address");
+        if(!email) {
+            navigate("/register");
             return;
         }
 
-        if(!email) {
-            navigate("/register");
+        if (!isValidEmail(email)) {
+            setError("Please enter a valid email address");
             return;
         }
 

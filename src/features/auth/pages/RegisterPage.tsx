@@ -46,10 +46,20 @@ export default function RegisterPage() {
 
         setLoading(true);
         try {
-            await registerRequest({email, password, password2});
+            const data = await registerRequest({email, password, password2});
+            if (data.status === 401) {
+                console.error(data.detail)
+                navigate("/login");
+            } else if (data.status === 400) {
+                console.error(data.email);
+                throw new Error("Bad request. Failed with status "+data.status);
+            } else if (data.status === 404) {
+                console.error(data.email);
+                throw new Error("Not found. Failed with status "+data.status);
+            }
             navigate("/login")
         } catch {
-            setEmailError("Something went wrong, please try again");
+            setEmailError("Failed to register, please try again");
         } finally {
             setLoading(false);
         }

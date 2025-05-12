@@ -1,17 +1,19 @@
 // src/features/auth/pages/ResetPasswordPage.tsx
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Form from "../components/Form";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import PasswordRequirements from "../components/PasswordRequirements";
 import Input from "../../../components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isValidPassword } from "../../../utils/validators/passwordValidator";
 import PasswordRepeat from "../components/PasswordRepeat";
+import { passwordResetConfirmRequest } from "../auth.api";
 
 export default function ResetPasswordPage() {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams('');
 
     const [password, setPassword] = useState('');
     const [repeatedPassword, setRepeatedPassword] = useState('');
@@ -19,9 +21,41 @@ export default function ResetPasswordPage() {
     const passwordOK = isValidPassword(password);
     const passwordRepeat = (password === repeatedPassword);
 
-    const handleContinue = () => {
-        toast.success("The password has been reset!");
-        navigate('/login');
+    const [uid, setUid] = useState<string>('');
+    const [token, setToken] = useState<string>('');
+
+    useEffect(() => {
+        const uid = searchParams.get("uid");
+        const token = searchParams.get("token");
+
+        if (uid) {
+            setUid(uid);
+        }
+        if (token) {
+            setToken(token);
+        }
+
+    }, [searchParams]);
+
+    async function handleReset(e: React.FormEvent) {
+        e.preventDefault();
+        try {
+            const data = await passwordResetConfirmRequest({uid, token, new_password1: password, new_password2: repeatedPassword});
+            if (data.status === 401) {
+                console.error(data.detail)
+                navigate("/login");
+            } else if (data.status === 400) {
+                console.error(data.uid, data.token);
+                throw new Error("Bad request. Failed with status "+data.status);
+            } else if (data.status === 404) {
+                console.error(data.uid, data.token);
+                throw new Error("Not found. Failed with status "+data.status);
+            }
+            toast.success("The password has been reset!");
+            navigate('/login');
+        } catch {
+            toast.error("Failed to reset password, please try again")
+        }
     }
 
     return (
@@ -59,7 +93,7 @@ export default function ResetPasswordPage() {
                         <PasswordRequirements />
                     </div>
                 )}
-                <button type="submit" className="btn btn-primary" onClick={handleContinue}>Reset</button>
+                <button type="submit" className="btn btn-primary" onClick={handleReset}>Reset</button>
             </Form>
         </div>
     )

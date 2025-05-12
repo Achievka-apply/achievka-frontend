@@ -1,8 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import gear from "../../assets/gear.svg";
+import { logoutRequest } from "../../features/auth/auth.api";
+import { useState } from "react";
 
 export default function TopHeader() {
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); 
+
+    setLoading(true);
+    try {
+        await logoutRequest();
+        localStorage.removeItem("access_token");
+        navigate("/login")
+    } catch(error) {
+        throw new Error("Logout error: "+error);
+    } finally {
+        setLoading(false);
+    }
+  }
 
   return (
     <header>
@@ -27,7 +46,7 @@ export default function TopHeader() {
             <hr />
             <li><a className="dropdown-item" href="/app/settings">Account settings</a></li>
             <li><a className="dropdown-item" href="/app/faq">FAQ</a></li>
-            <li><a className="dropdown-item">Log out</a></li>
+            <li><a className="dropdown-item" href="#" onClick={handleLogout}>{loading ? "Logging out…" : "Log out"}</a></li>
           </ul>
         </div>
       </div>

@@ -36,7 +36,7 @@ export default function LoginPage() {
         setLoading(true);
         try {
             const data = await loginRequest({email, password});
-
+            
             if (!data) {
                 console.error("API не вернул тело ответа");
                 return;
@@ -48,7 +48,7 @@ export default function LoginPage() {
 
             navigate("/app")
         } catch {
-            setEmailError("Something went wrong, please try again");
+            setEmailError("Failed to log in, please try again");
         } finally {
             setLoading(false);
         }

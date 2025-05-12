@@ -1,6 +1,6 @@
 // src/components/Input.tsx
 
-import { InputProps } from "./types";
+import { InputProps } from "../types/types";
 
 export default function Input({
     type,

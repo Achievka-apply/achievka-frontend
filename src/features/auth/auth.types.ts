@@ -24,9 +24,13 @@ export interface AuthResponse {
   access: string;
 }
 
-export interface OAuthCredentials {
-  provider: string,
-  client_id: string,
-  client_secret: string,
+export interface PasswordResetBody {
+  email: string
+}
+
+export interface PasswordResetConfirmBody {
+  uid: string;
   token: string;
+  new_password1: string;
+  new_password2: string;
 }
