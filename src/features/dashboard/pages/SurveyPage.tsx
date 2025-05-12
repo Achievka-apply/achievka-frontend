@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { SurveyAnswers } from "../dashboard.types";
 import { useNavigate } from "react-router-dom";
+import { sendSurveyResponses } from "../dashboard.api";
 
 export default function SurveyPage() {
 
     const navigate = useNavigate();
 
+    const questions = [
+        "1. What is your name?",
+        "2. How did you hear about us?",
+        "3. What school do you go to?",
+        "4. Have you used any services to help with university applications?",
+        "5. How are you getting ready to apply to university?",
+        "6. How can we help you? (select all that apply)",
+    ]
+
     const [answers, setAnswers] = useState<SurveyAnswers>({
         name: '',
         heardFrom: '',
         heardFromOther: '',
-        school: null,
+        school: '',
         usedService: null,
         usedServiceDetails: '',
         readiness: '',
@@ -36,10 +46,54 @@ export default function SurveyPage() {
     const handleSkip = (field: 'school' | 'usedService') =>
         handleChange(field, null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('submit payload', answers);
-        // fetch('/api/survey', { method:'POST', body: JSON.stringify(answers) })
+        const sendingData = {
+            responses: [
+                {
+                    question_index: 0,
+                    answer_text: answers.name,
+                    answer_choices: [],
+                },
+                {
+                    question_index: 1,
+                    answer_text: answers.heardFromOther !== null || '' ? answers.heardFromOther : answers.heardFrom,
+                    answer_choices: [],
+                },
+                {
+                    question_index: 2,
+                    answer_text: answers.school,
+                    answer_choices: [],
+                },
+                {
+                    question_index: 3,
+                    answer_text: answers.usedServiceDetails !== null || '' ? answers.usedServiceDetails : answers.usedService,
+                    answer_choices: [],
+                },
+                {
+                    question_index: 4,
+                    answer_text: answers.readiness,
+                    answer_choices: [],
+                },
+                {
+                    question_index: 5,
+                    answer_text: null,
+                    answer_choices: answers.helpWith,
+                }
+            ]
+        }
+        console.log(JSON.stringify(sendingData));
+        const data = await sendSurveyResponses(sendingData);
+        if (data.status === 401) {
+            console.error(data)
+            navigate("/login");
+        } else if (data.status === 400) {
+            console.error(data);
+            throw new Error("Bad request. Failed with status "+data.status);
+        } else if (data.status === 404) {
+            console.error(data);
+            throw new Error("Not found. Failed with status "+data.status);
+        }
         navigate("/app");
     };
 
@@ -50,7 +104,7 @@ export default function SurveyPage() {
                 <form onSubmit={handleSubmit}>
                     {/* Q0 */}
                     <div className="mb-3">
-                        <label className="form-label">0. What is your name?</label>
+                        <label className="form-label">{questions[0]}</label>
                         <input
                             type="text"
                             className="form-control"
@@ -61,7 +115,7 @@ export default function SurveyPage() {
 
                     {/* Q1 */}
                     <div className="mb-3">
-                        <label className="form-label">1. How did you hear about us?</label>
+                        <label className="form-label">{questions[1]}</label>
                         {[
                             'Instagram','TikTok','Youtube','Facebook',
                             'A friend told me','From my school/teacher',
@@ -97,7 +151,7 @@ export default function SurveyPage() {
                     <div className="mb-3 d-flex align-items-center">
                         <div className="flex-grow-1">
                             <label className="form-label">
-                                2. What school do you go to?
+                                {questions[2]}
                             </label>
                             <input
                                 type="text"
@@ -119,7 +173,7 @@ export default function SurveyPage() {
                     {/* Q3 */}
                     <div className="mb-3">
                         <label className="form-label">
-                            3. Have you used any services to help with university applications?
+                            {questions[3]}
                         </label>
                         {[
                             { value: 'agency', label: 'Yes, an educational agency' },
@@ -171,7 +225,7 @@ export default function SurveyPage() {
                     {/* Q4 */}
                     <div className="mb-3">
                         <label className="form-label">
-                            4. How are you getting ready to apply to university?
+                            {questions[4]}
                         </label>
                         {[
                             'Just looking around',
@@ -202,7 +256,7 @@ export default function SurveyPage() {
                     {/* Q5 */}
                     <div className="mb-4">
                         <label className="form-label">
-                            5. How can we help you? (select all that apply)
+                            {questions[5]}
                         </label>
                         {[
                             'Picking the right university',
