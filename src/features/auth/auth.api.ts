@@ -1,7 +1,6 @@
 // src/features/auth/auth.api.ts
 
-import { CredentialResponse } from "@react-oauth/google";
-import { AuthResponse, LoginCredentials, PasswordResetBody, PasswordResetConfirmBody, RegisterCredentials } from "./auth.types"
+import { AuthResponse, GoogleOAuthCredentials, LoginCredentials, PasswordResetBody, PasswordResetConfirmBody, RegisterCredentials } from "./auth.types"
 import { apiRequest } from "../../api/api";
 
 export const loginRequest = (body: LoginCredentials): Promise<AuthResponse> =>
@@ -24,7 +23,7 @@ export const logoutRequest = () =>
         method: "POST",
     })
 
-export const googleOAuthRequest = (body: CredentialResponse): Promise<AuthResponse> =>
+export const oAuthRequest = (body: GoogleOAuthCredentials): Promise<AuthResponse> =>
     apiRequest({
         route: "auth/google",
         method: "POST",

@@ -13,7 +13,7 @@ export default function OAuthButtons() {
 
   const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
  
-    const data = await googleOAuthRequest(credentialResponse);
+    const data = await oAuthRequest({code: credentialResponse.credential});
     
     if (!data) {
       console.error("API не вернул тело ответа");
