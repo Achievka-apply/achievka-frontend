@@ -20,6 +20,10 @@ export interface RegisterCredentials {
   password2: string;
 }
 
+export interface GoogleOAuthCredentials {
+  code?: string;
+}
+
 export interface AuthResponse {
   access: string;
 }

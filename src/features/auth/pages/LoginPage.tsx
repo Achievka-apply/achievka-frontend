@@ -7,9 +7,13 @@ import OAuthButtons from "../components/OAuthButtons";
 import Input from "../../../components/Input";
 import { isValidEmail } from "../../../utils/validators/emailValidator";
 import { loginRequest } from "../auth.api";
+import { fetchUserProfile } from "../../user/user.api";
+import { setUserProfile } from "../../user/user.store";
+import { useAppDispatch } from "../../../store/hooks";
 
 export default function LoginPage() {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [searchParams] = useSearchParams('');
 
     const [email, setEmail] = useState("");
@@ -45,6 +49,13 @@ export default function LoginPage() {
             const { access } = data;
 
             localStorage.setItem("access_token", access);
+
+            try {
+                const profile = await fetchUserProfile();
+                dispatch(setUserProfile(profile));
+            } catch {
+                console.error("Failed downloading user data.")
+            }
 
             navigate("/app")
         } catch {

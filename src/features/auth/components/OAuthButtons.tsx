@@ -3,8 +3,12 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleOAuthRequest } from "../auth.api";
 import { useNavigate } from "react-router-dom";
+import { fetchUserProfile } from "../../user/user.api";
+import { setUserProfile } from "../../user/user.store";
+import { useAppDispatch } from "../../../store/hooks";
 
 export default function OAuthButtons() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate(); 
 
   const login = useGoogleLogin({
@@ -28,6 +32,13 @@ export default function OAuthButtons() {
     const { access } = data;
 
     localStorage.setItem("access_token", access);
+
+    try {
+      const profile = await fetchUserProfile();
+      dispatch(setUserProfile(profile));
+    } catch {
+      console.error("Failed downloading user data.")
+    }
 
     navigate('/app');
   };
