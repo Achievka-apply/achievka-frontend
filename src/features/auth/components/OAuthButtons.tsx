@@ -38,7 +38,7 @@ export default function OAuthButtons() {
     <div className="w-full max-w-md p-8 bg-white shadow-md rounded-xl space-y-6">
         <div className="d-flex flex-column">
             <GoogleLogin
-              onSuccess={handleGoogleSuccess}
+              onSuccess={({ code }) => handleGoogleSuccess(code)}
               onError={() => console.error("Google Login Failed")}
             />
             <button type="submit" className="btn btn-primary mb-1">Microsoft</button>
