@@ -1,6 +1,5 @@
 // src/features/auth/auth.api.ts
 
-import { CredentialResponse } from "@react-oauth/google";
 import { AuthResponse, LoginCredentials, PasswordResetBody, PasswordResetConfirmBody, RegisterCredentials } from "./auth.types"
 import { apiRequest } from "../../api/api";
 
@@ -29,7 +28,7 @@ export const refreshTokenRequest = (): Promise<AuthResponse> =>
         route: "auth/token-refresh",
     })
 
-export const oAuthRequest = (body: CredentialResponse): Promise<AuthResponse> =>
+export const googleOAuthRequest = (body: {code: string}): Promise<AuthResponse> =>
     apiRequest({
         route: "auth/oauth",
         method: "POST",
