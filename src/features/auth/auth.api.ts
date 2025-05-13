@@ -23,7 +23,7 @@ export const logoutRequest = () =>
         method: "POST",
     })
 
-export const oAuthRequest = (body: GoogleOAuthCredentials): Promise<AuthResponse> =>
+export const googleOAuthRequest = (body: GoogleOAuthCredentials): Promise<AuthResponse> =>
     apiRequest({
         route: "auth/google",
         method: "POST",
