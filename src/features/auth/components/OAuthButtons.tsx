@@ -1,6 +1,6 @@
 // src/features/auth/components/OAuthButtons.tsx
 
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { googleOAuthRequest } from "../auth.api";
 import { useNavigate } from "react-router-dom";
 import { fetchUserProfile } from "../../user/user.api";
@@ -11,9 +11,18 @@ export default function OAuthButtons() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate(); 
 
-  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+  const login = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: ({ code }) => {
+      // здесь код есть
+      handleGoogleSuccess(code);
+    },
+    onError: () => console.error('Google Login Failed'),
+  });
+
+  const handleGoogleSuccess = async (code: string) => {
  
-    const data = await googleOAuthRequest({code: credentialResponse.credential});
+    const data = await googleOAuthRequest({code});
     
     if (!data) {
       console.error("API не вернул тело ответа");
@@ -37,10 +46,7 @@ export default function OAuthButtons() {
   return (
     <div className="w-full max-w-md p-8 bg-white shadow-md rounded-xl space-y-6">
         <div className="d-flex flex-column">
-            <GoogleLogin
-              onSuccess={({ code }) => handleGoogleSuccess(code)}
-              onError={() => console.error("Google Login Failed")}
-            />
+            <button onClick={() => login()} type="submit" className="btn btn-primary mb-1">Google</button>
             <button type="submit" className="btn btn-primary mb-1">Microsoft</button>
             <button type="submit" className="btn btn-primary mb-1">Apple</button>
             <button type="submit" className="btn btn-primary mb-1">Facebook</button>
