@@ -23,11 +23,6 @@ export const logoutRequest = () =>
         method: "POST",
     })
 
-export const refreshTokenRequest = (): Promise<AuthResponse> =>
-    apiRequest({
-        route: "auth/token-refresh",
-    })
-
 export const oAuthRequest = (body: GoogleOAuthCredentials): Promise<AuthResponse> =>
     apiRequest({
         route: "auth/google",
@@ -47,5 +42,4 @@ export const passwordResetConfirmRequest = (body: PasswordResetConfirmBody) =>
         route: "auth/password_reset_confirm",
         method: "POST",
         body,
-
     })
