@@ -27,3 +27,13 @@ export interface SurveyAnswers {
     readiness: string;
     helpWith: string[];
 }
+
+export interface SurveyQuestionProps {
+    question_index: number;
+    answer_text: string | null;
+    answer_choices: string[];
+}
+
+export interface SurveyAnswersProps {
+    responses: SurveyQuestionProps[];
+}

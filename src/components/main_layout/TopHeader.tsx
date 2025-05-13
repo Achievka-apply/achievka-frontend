@@ -2,8 +2,12 @@ import { useNavigate } from "react-router-dom";
 import gear from "../../assets/gear.svg";
 import { logoutRequest } from "../../features/auth/auth.api";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { clearUserProfile } from "../../features/user/user.store";
 
 export default function TopHeader() {
+  const user = useAppSelector(state => state.user.userProfile);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,6 +19,7 @@ export default function TopHeader() {
     try {
         await logoutRequest();
         localStorage.removeItem("access_token");
+        dispatch(clearUserProfile())
         navigate("/login")
     } catch(error) {
         throw new Error("Logout error: "+error);
@@ -38,10 +43,10 @@ export default function TopHeader() {
             <div className="dropdown-item-text">
               <button>
                 {/* Avatar / Initial */}
-                U
+                {user ? user.first_name : 'U'}
               </button>
-              <p>Name</p>
-              <p>email@example.com</p>
+              <p>{user ? user.first_name+user.last_name : 'Name'}</p>
+              <p>{user ? user.email : 'email@example.com'}</p>  
             </div>
             <hr />
             <li><a className="dropdown-item" href="/app/settings">Account settings</a></li>

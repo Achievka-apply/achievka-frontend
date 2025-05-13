@@ -25,7 +25,7 @@ export const logoutRequest = () =>
 
 export const googleOAuthRequest = (body: {code: string}): Promise<GoogleOAuthResponse> =>
     apiRequest({
-        route: "auth/oauth",
+        route: "auth/google",
         method: "POST",
         body,
     })
@@ -42,5 +42,4 @@ export const passwordResetConfirmRequest = (body: PasswordResetConfirmBody) =>
         route: "auth/password_reset_confirm",
         method: "POST",
         body,
-
     })

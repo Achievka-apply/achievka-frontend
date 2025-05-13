@@ -1,10 +1,10 @@
 // src/features/user/user.store.ts
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserProfile } from './user.types';
+import { UserGetResponse } from './user.types';
 
 interface UserState {
-  userProfile: UserProfile | null;
+  userProfile: UserGetResponse | null;
 }
 
 const initialState: UserState = {
@@ -15,7 +15,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserProfile(state, action: PayloadAction<UserProfile>) {
+    setUserProfile(state, action: PayloadAction<UserGetResponse>) {
       state.userProfile = action.payload;
     },
     clearUserProfile(state) {

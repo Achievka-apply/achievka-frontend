@@ -11,3 +11,12 @@ export interface UserProfile {
     dateOfBirth: string;
     language: 'en' | 'kk' | 'ru';
 }
+
+export interface UserGetResponse {
+    avatar: null;
+    bio: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    updated_at: Date;
+}

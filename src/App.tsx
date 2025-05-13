@@ -9,7 +9,6 @@ import RegisterPage from "./features/auth/pages/RegisterPage";
 import LoginPage from "./features/auth/pages/LoginPage";
 import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
 import SurveyPage from "./features/dashboard/pages/SurveyPage";
-import ConfirmResetPage from './features/auth/pages/ConfirmResetPage';
 import ResetPasswordPage from './features/auth/pages/ResetPasswordPage';
 import DashboardPage from './features/dashboard/pages/DashboardPage';
 import MainLayout from './components/main_layout/MainLayout';
@@ -26,7 +25,6 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/confirm-reset-password" element={<ConfirmResetPage />}/>
           <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Приватные роуты */}
@@ -46,7 +44,7 @@ function App() {
 
       <ToastContainer
         position="top-right" // положение
-        autoClose={3000}      // закрытие через 3 секунды
+        autoClose={5000}      // закрытие через 3 секунды
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
