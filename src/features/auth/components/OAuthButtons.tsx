@@ -1,6 +1,6 @@
 // src/features/auth/components/OAuthButtons.tsx
 
-import { useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin, type CodeResponse } from "@react-oauth/google";
 import { googleOAuthRequest } from "../auth.api";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,8 @@ export default function OAuthButtons() {
 
   const login = useGoogleLogin({
     flow: 'auth-code',
-    onSuccess: ({ code }) => {
-      // здесь код есть
-      handleGoogleSuccess(code);
+    onSuccess: (response: CodeResponse) => {
+      handleGoogleSuccess(response.code);
     },
     onError: () => console.error('Google Login Failed'),
   });
