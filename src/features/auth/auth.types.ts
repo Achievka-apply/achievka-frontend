@@ -28,6 +28,10 @@ export interface AuthResponse {
   access: string;
 }
 
+export interface GoogleOAuthResponse {
+  key: string;
+}
+
 export interface PasswordResetBody {
   email: string
 }

@@ -28,9 +28,9 @@ export default function OAuthButtons() {
       return;
     }
 
-    const { access } = data;
+    const { key } = data;
 
-    localStorage.setItem("access_token", access);
+    localStorage.setItem("access_token", key);
 
     try {
       const profile = await fetchUserProfile();
